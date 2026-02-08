@@ -44,7 +44,7 @@
     </script>
     
     <!-- Icons & Fonts -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
@@ -166,7 +166,6 @@
                         
                         <!-- Image Wrapper -->
                         <div class="relative w-28 h-28 md:w-32 md:h-32 rounded-[1.8rem] overflow-hidden border border-white/10 bg-stone-900 shadow-2xl">
-                            <!-- User Requested: Image File Updated -->
                             <img 
                                 src="imageme.jpeg" 
                                 onerror="this.src='https://api.dicebear.com/9.x/avataaars/svg?seed=Atharv&backgroundColor=1c1917'" 
@@ -187,7 +186,7 @@
                         </div>
                     </div>
 
-                    <!-- User Requested: CV File Updated -->
+                    <!-- CV Download -->
                     <a href="cv.pdf" download class="bg-white/5 hover:bg-white/10 border border-white/5 text-stone-300 hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide transition-all active:scale-95 flex items-center gap-2 backdrop-blur-md" aria-label="Download CV">
                         <i data-lucide="download" class="w-4 h-4" aria-hidden="true"></i>
                         <span class="hidden sm:inline">Download CV</span>
@@ -228,7 +227,7 @@
                 </div>
             </article>
 
-            <!-- Socials Stack (Static HTML replacement for JS document.write) -->
+            <!-- Socials Stack -->
             <nav class="md:col-span-1 grid grid-rows-4 gap-3" aria-label="Social Media Links">
                 <!-- Instagram -->
                 <a href="https://instagram.com/__athryx_x_10" target="_blank" rel="noopener noreferrer" 
@@ -516,11 +515,11 @@
             setInterval(updateClock, 1000);
             updateClock();
 
-            // --- TECH STACK MARQUEE ---
+            // --- TECH STACK MARQUEE (Optimized) ---
             const techStack = ["React", "Next.js", "Tailwind", "Node.js", "Python", "Gemini API", "Three.js", "PostgreSQL", "Git", "Figma", "HTML5", "CSS3"];
             const stackContainer = document.getElementById('tech-stack');
             
-            // Triple duplicate for seamless loop
+            // Triple duplicate for seamless loop using Fragment for performance
             const fragment = document.createDocumentFragment();
             [...techStack, ...techStack, ...techStack].forEach(tech => {
                 const div = document.createElement('div');
@@ -578,8 +577,9 @@
 
             // --- API HANDLER WITH FALLBACK ---
             async function callGemini(prompt, systemInstruction = "") {
+                // If API Key is missing, return fallback without crashing
                 if (!apiKey) {
-                    await new Promise(r => setTimeout(r, 1500)); // Fake network delay
+                    await new Promise(r => setTimeout(r, 1500)); // Simulate network delay
                     return "Neural Link Offline: API Key missing in environment. I am currently running in Demo Mode. My developer, Atharv, can answer this personally!";
                 }
                 
