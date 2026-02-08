@@ -160,7 +160,8 @@
         <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
             
             <!-- Profile Card -->
-            <article class="bento-card md:col-span-2 md:row-span-2 min-h-[420px] p-6 md:p-10 flex flex-col justify-between fade-in-up" style="animation-delay: 0.05s;">
+            <!-- Mobile Opt: Reduced min-height slightly for small screens (380px) -->
+            <article class="bento-card md:col-span-2 md:row-span-2 min-h-[380px] md:min-h-[420px] p-6 md:p-10 flex flex-col justify-between fade-in-up" style="animation-delay: 0.05s;">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-red-600/20 rounded-full blur-[90px] pointer-events-none mix-blend-screen" aria-hidden="true"></div>
                 
                 <header class="flex justify-between items-start relative z-10">
@@ -236,7 +237,7 @@
             </article>
 
             <!-- Socials Stack -->
-            <nav class="md:col-span-1 grid grid-rows-4 gap-3" aria-label="Social Media Links">
+            <nav class="md:col-span-1 flex flex-col gap-3" aria-label="Social Media Links">
                 <!-- Instagram -->
                 <a href="https://instagram.com/__athryx_x_10" target="_blank" rel="noopener noreferrer" 
                    class="bento-card p-4 flex items-center justify-between group fade-in-up active:scale-95" 
@@ -294,6 +295,27 @@
                         <span class="text-[9px] font-bold text-[#5865F2] tracking-wider">JOIN</span>
                     </div>
                 </a>
+
+                <!-- Free Fire (Ultra Special Effect) -->
+                <button id="btn-copy-ff" class="bento-card p-4 flex items-center justify-between group fade-in-up active:scale-95 relative overflow-hidden border-orange-500/20 hover:border-orange-500/50 transition-colors cursor-pointer w-full" 
+                   style="animation-delay: 0.35s;" aria-label="Copy Free Fire ID">
+                    <!-- Magma Glow Background -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-orange-900/10 via-red-900/10 to-yellow-900/10 opacity-50 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    
+                    <div class="flex items-center gap-4 relative z-10">
+                        <div class="p-2.5 bg-gradient-to-br from-orange-500/20 to-red-600/20 rounded-xl text-orange-500 group-hover:text-yellow-400 transition-colors shadow-[0_0_15px_rgba(249,115,22,0.3)]">
+                            <i data-lucide="flame" class="w-5 h-5 animate-pulse"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="font-medium text-stone-400 group-hover:text-white transition-colors text-sm block">Free Fire</span>
+                            <span class="text-[10px] text-orange-500/80 font-mono tracking-wider group-hover:text-orange-300 font-bold block">2601671899</span>
+                        </div>
+                    </div>
+                    
+                    <div class="relative z-10 bg-orange-500/10 border border-orange-500/20 px-2 py-1 rounded text-[9px] text-orange-500 font-bold uppercase tracking-widest group-hover:bg-orange-500 group-hover:text-black transition-colors" id="ff-label">
+                        COPY
+                    </div>
+                </button>
             </nav>
         </section>
 
@@ -420,16 +442,17 @@
                     </div>
                 </div>
 
+                <!-- Mobile Opt: Reduced padding (p-3) on mobile so buttons fit side-by-side -->
                 <div class="grid grid-cols-3 gap-3 w-full md:w-auto">
-                    <button id="btn-copy-new" class="group bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl p-4 flex flex-col items-center gap-2 transition-all active:scale-95" aria-label="Copy Email Address">
+                    <button id="btn-copy-new" class="group bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl p-3 md:p-4 flex flex-col items-center gap-2 transition-all active:scale-95" aria-label="Copy Email Address">
                         <i data-lucide="mail" class="w-5 h-5 text-stone-400 group-hover:text-red-500 transition-colors"></i>
                         <span class="text-[10px] font-bold uppercase text-stone-500 group-hover:text-white" id="copy-label">Email</span>
                     </button>
-                    <a href="https://t.me/its_yash_official_2032" target="_blank" class="group bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl p-4 flex flex-col items-center gap-2 transition-all active:scale-95" aria-label="Contact on Telegram">
+                    <a href="https://t.me/its_yash_official_2032" target="_blank" class="group bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl p-3 md:p-4 flex flex-col items-center gap-2 transition-all active:scale-95" aria-label="Contact on Telegram">
                         <i data-lucide="send" class="w-5 h-5 text-stone-400 group-hover:text-blue-500 transition-colors"></i>
                         <span class="text-[10px] font-bold uppercase text-stone-500 group-hover:text-white">Telegram</span>
                     </a>
-                    <button id="btn-ai-pitch" class="group bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl p-4 flex flex-col items-center gap-2 transition-all active:scale-95" aria-label="Generate AI Job Pitch">
+                    <button id="btn-ai-pitch" class="group bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl p-3 md:p-4 flex flex-col items-center gap-2 transition-all active:scale-95" aria-label="Generate AI Job Pitch">
                         <i data-lucide="sparkles" class="w-5 h-5 text-stone-400 group-hover:text-yellow-400 transition-colors"></i>
                         <span class="text-[10px] font-bold uppercase text-stone-500 group-hover:text-white">AI Pitch</span>
                     </button>
@@ -582,6 +605,55 @@
                     copyLabel.innerText = "ERROR";
                 }
             });
+
+            // --- FREE FIRE COPY LOGIC ---
+            const btnFF = document.getElementById('btn-copy-ff');
+            const ffLabel = document.getElementById('ff-label');
+            
+            if (btnFF) {
+                btnFF.addEventListener('click', async () => {
+                    const ffId = "2601671899";
+                    const originalText = "COPY";
+                    
+                    // Visual Feedback Helper
+                    const showFFCopied = () => {
+                        ffLabel.innerText = "COPIED!";
+                        ffLabel.classList.remove('bg-orange-500/10', 'text-orange-500', 'group-hover:bg-orange-500', 'group-hover:text-black');
+                        ffLabel.classList.add('bg-emerald-500', 'text-black', 'border-emerald-500');
+                        
+                        setTimeout(() => {
+                            ffLabel.innerText = originalText;
+                            ffLabel.classList.remove('bg-emerald-500', 'text-black', 'border-emerald-500');
+                            ffLabel.classList.add('bg-orange-500/10', 'text-orange-500', 'group-hover:bg-orange-500', 'group-hover:text-black');
+                        }, 2000);
+                    };
+
+                    // Modern Copy
+                    if (navigator.clipboard && window.isSecureContext) {
+                        try {
+                            await navigator.clipboard.writeText(ffId);
+                            showFFCopied();
+                            return;
+                        } catch (err) {}
+                    }
+                    
+                    // Fallback Copy
+                    try {
+                        const textArea = document.createElement("textarea");
+                        textArea.value = ffId;
+                        textArea.style.position = "fixed";
+                        textArea.style.left = "-9999px";
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        showFFCopied();
+                    } catch (err) {
+                        ffLabel.innerText = "ERROR";
+                    }
+                });
+            }
 
             // --- API HANDLER WITH FALLBACK ---
             async function callGemini(prompt, systemInstruction = "") {
